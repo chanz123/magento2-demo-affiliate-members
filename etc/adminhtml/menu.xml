@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Affiliate::top_level" title="Members" module="Affiliate_Members" sortOrder="100" resource="Affiliate_Members::parent" parent="Magento_Backend::marketing"/>
+		<add action="affiliate_members/affiliatemembers/index" id="Affiliate::affiliate_affiliatemembers" module="Affiliate_Members" parent="Affiliate::top_level"  resource="Magento_Backend::content" sortOrder="9999" title="Affiliatemembers"/>
+	</menu>
+</config>

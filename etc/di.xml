@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Affiliate\Members\Api\AffiliatemembersManagementInterface" type="Affiliate\Members\Model\AffiliatemembersManagement"/>
+	<preference for="Affiliate\Members\Api\AffiliatemembersRepositoryInterface" type="Affiliate\Members\Model\AffiliatemembersRepository"/>
+	<preference for="Affiliate\Members\Api\Data\AffiliatemembersSearchResultsInterface" type="Affiliate\Members\Model\AffiliatemembersSearchResult"/>	
+	<virtualType name="Affiliate\Members\Model\ResourceModel\Affiliatemembers\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">affiliate_affiliatemembers</argument>
+			<argument name="resourceModel" xsi:type="string">Affiliate\Members\Model\ResourceModel\Affiliatemembers\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="affiliate_affiliatemembers_grid_data_source" xsi:type="string">Affiliate\Members\Model\ResourceModel\Affiliatemembers\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+</config>

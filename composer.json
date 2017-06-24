@@ -1,0 +1,21 @@
+{
+    "name": "affiliate/module-members",
+    "description": "Affiliate Members",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "EmizenTech",
+            "email": "info@emizentech.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Affiliate\\Members\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
