@@ -1,10 +1,6 @@
 <?php
-
-
 namespace Affiliate\Members\Model;
-
 use Affiliate\Members\Api\Data\AffiliatemembersInterface;
-
 class Affiliatemembers extends \Magento\Framework\Model\AbstractModel implements AffiliatemembersInterface
 {
 

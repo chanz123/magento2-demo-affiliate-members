@@ -15,6 +15,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Affiliate\Members\Api\Data\AffiliatemembersSearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Affiliate\Members\Model\ResourceModel\Affiliatemembers as ResourceAffiliatemembers;
+use Affiliate\Members\Model\Status\Options as statusOptions;
 
 class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
 {
@@ -35,6 +36,8 @@ class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
 
     protected $dataObjectHelper;
 
+    protected $statusOptions;
+
 
     /**
      * @param ResourceAffiliatemembers $resource
@@ -54,7 +57,9 @@ class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
         AffiliatemembersSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        statusOptions $statusOptions
+
     ) {
         $this->resource = $resource;
         $this->affiliatemembersFactory = $affiliatemembersFactory;
@@ -64,6 +69,7 @@ class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
         $this->dataAffiliatemembersFactory = $dataAffiliatemembersFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
+        $this->statusOptions = $statusOptions;
     }
 
     /**
@@ -103,6 +109,24 @@ class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function getItems() {
+        $collection     = $this->affiliatemembersCollectionFactory->create();
+        return $collection->getItems();
+    }
+
+    public function getAffiliatemembers()
+    {
+        $collection = $this->affiliatemembersCollectionFactory->create();
+
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setTotalCount($collection->getSize());
+        $searchResults->setItems($collection->getItems());
+        return $searchResults;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
@@ -114,9 +138,16 @@ class AffiliatemembersRepository implements AffiliatemembersRepositoryInterface
                     continue;
                 }
                 $condition = $filter->getConditionType() ?: 'eq';
-                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+                if ($filter->getField() === 'status') {
+                    $status_options = $this->statusOptions->getOptionArray();
+                    $status_value   = array_search(ucfirst($filter->getValue()), $status_options);
+                    $collection->addFieldToFilter($filter->getField(), [$condition => $status_value]);
+                } else {
+                    $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+                }
             }
         }
+
         
         $sortOrders = $criteria->getSortOrders();
         if ($sortOrders) {

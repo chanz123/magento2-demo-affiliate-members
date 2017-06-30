@@ -1,16 +1,14 @@
 <?php
-
-
+use Affiliate\Members\Api\AffiliatemembersManagementInterface;
 namespace Affiliate\Members\Model;
-
-class AffiliatemembersManagement
+class AffiliatemembersManagement extends \Affiliate\Members\Model\AffiliatemembersRepository implements AffiliatemembersManagementInterface
 {
 
     /**
      * {@inheritdoc}
      */
-    public function getAffiliatemembers($param)
+    public function getAffiliatemembers()
     {
-        return 'hello api GET return the $param ' . $param;
+        return $this->getItems();
     }
 }

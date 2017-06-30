@@ -30,6 +30,9 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        
+        $data['Profile_Image'] = '';
+        
         if ($data) {
             $id = $this->getRequest()->getParam('affiliatemembers_id');        
             $model = $this->_objectManager->create('Affiliate\Members\Model\Affiliatemembers')->load($id);
@@ -37,26 +40,10 @@ class Save extends \Magento\Backend\App\Action
                 $this->messageManager->addErrorMessage(__('This Affiliatemembers no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }           
-            if($_FILES && $_FILES['Profile_Image']['tmp_name']){
-                 $uploader = $this->_objectManager->create(
-                    'Magento\MediaStorage\Model\File\Uploader',
-                    ['fileId' => 'Profile_Image']
-                );
-
-                $uploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png']);
-               
-                $imageAdapter = $this->_objectManager->get('Magento\Framework\Image\AdapterFactory')->create();
-                $uploader->setAllowRenameFiles(true);
-                $uploader->setFilesDispersion(true);
-                
-                $mediaDirectory = $this->_objectManager->get('Magento\Framework\Filesystem')
-                    ->getDirectoryRead(DirectoryList::MEDIA);
-                $result = $uploader->save($mediaDirectory->getAbsolutePath('profile_images'));
-                if($result['error']==0)
-                {
-                    $data['Profile_Image'] = 'profile_images' . $result['file'];
-                }   
-            }                 
+             
+            if(isset($data['image'])){
+                $data['Profile_Image'] = $data['image'][0]['file'];
+             }               
             $model->setData($data);        
             try {
                 $model->save();

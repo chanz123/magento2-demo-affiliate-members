@@ -1,5 +1,8 @@
 <?php
+
+
 namespace Affiliate\Members\Api\Data;
+
 interface AffiliatemembersInterface
 {
 

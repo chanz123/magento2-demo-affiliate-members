@@ -27,7 +27,7 @@ class InstallSchema implements InstallSchemaInterface
             'affiliatemembers_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true),
+            array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
             'Entity ID'
         );        
         $table_affiliate_affiliatemembers->addColumn(

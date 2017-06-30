@@ -1,7 +1,12 @@
 <?php
+
+
 namespace Affiliate\Members\Api\Data;
+
 interface AffiliatemembersSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
 {
+
+
     /**
      * Get Affiliatemembers list.
      * @return \Affiliate\Members\Api\Data\AffiliatemembersInterface[]

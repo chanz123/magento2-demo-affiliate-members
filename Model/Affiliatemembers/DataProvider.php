@@ -52,7 +52,27 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
         $items = $this->collection->getItems();
         foreach ($items as $model) {
-            $this->loadedData[$model->getId()] = $model->getData();
+		 $itemData = $model->getData();
+            $imageName = $itemData['Profile_Image']; // Your database field 
+	if($imageName !=''){
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+         $media =  $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+                    ->getStore()
+                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'profile_images'.$imageName;
+
+            unset($itemData['image']);
+            $itemData['image'] = array(
+                array(
+                    'name'  =>  $imageName,
+                    'url'   =>  $media, // Should return a URL to view the image. For example, http://domain.com/pub/media/../../imagename.jpeg
+		'file'	=>$imageName
+                )
+            );
+}
+           // $this->loadedData[$item->getItemId()] = $itemData;
+
+
+            $this->loadedData[$model->getId()] = $itemData;
         }
         $data = $this->dataPersistor->get('affiliate_members_affiliatemembers');
         

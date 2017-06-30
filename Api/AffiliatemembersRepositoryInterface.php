@@ -1,13 +1,15 @@
 <?php
-
-
 namespace Affiliate\Members\Api;
-
 use Magento\Framework\Api\SearchCriteriaInterface;
-
 interface AffiliatemembersRepositoryInterface
 {
 
+
+    /**
+     * GET for affiliatemembers api
+     * @return \Affiliate\Members\Api\Data\AffiliatemembersSearchResultsInterface
+     */    
+    public function getAffiliatemembers();
 
     /**
      * Save Affiliatemembers

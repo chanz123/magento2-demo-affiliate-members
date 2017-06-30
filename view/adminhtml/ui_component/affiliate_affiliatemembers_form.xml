@@ -74,7 +74,27 @@
 				</item>
 			</argument>
 		</field>
-		<field name="Profile_Image">
+
+		<field name="image">
+		    <argument name="data" xsi:type="array">
+		        <item name="config" xsi:type="array">
+		            <item name="dataType" xsi:type="string">string</item>
+		            <item name="source" xsi:type="string">Affiliatemembers</item>
+		            <item name="label" xsi:type="string" translate="true">Image</item>
+		            <item name="visible" xsi:type="boolean">true</item>
+		            <item name="isMultipleFiles" xsi:type="boolean">false</item>
+		            <item name="formElement" xsi:type="string">fileUploader</item>
+		            <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+		            <item name="previewTmpl" xsi:type="string">Affiliate_Members/image-preview</item>
+		            <item name="required" xsi:type="boolean">false</item>
+		            <item name="uploaderConfig" xsi:type="array">
+		                <item name="url" xsi:type="url" path="affiliate_members/image/upload"/>
+		            </item>
+		        </item>
+		    </argument>
+		</field>
+
+		<!-- <field name="Profile_Image">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="dataType" xsi:type="string">text</item>
@@ -88,6 +108,6 @@
 					</item>
 				</item>
 			</argument>
-		</field>
+		</field> -->
 	</fieldset>
 </form>
